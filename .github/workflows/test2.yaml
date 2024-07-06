@@ -28,19 +28,23 @@ jobs:
   example_matrix:
     needs: list
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.ec.outputs.test }}
     strategy:
       matrix:
         version: ["changes/file1.txt","changes/files.txt"]
         os: [ubuntu-22.04, ubuntu-20.04]
     steps:
         - name: echo
+          id: ec
           run: |
              echo ${{ matrix.version }} ${{ matrix.os }}
+             echo "test=hello ${{ matrix.version }} ${{ matrix.os }}" >> "$GITHUB_OUTPUT"
   final-job:
      needs: ["list","example_matrix"]  
      runs-on: ubuntu-latest
      steps:
         - name: echo
           run: |
-             echo final
+             echo ${{needs.example_matrix.outputs.output1}}
         
