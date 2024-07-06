@@ -7,13 +7,12 @@ on:
   pull_request:
   workflow_dispatch:
 
-
 jobs:
   list:
+    runs-on: ubuntu-latest
     name: Path lister
     outputs:
       output1: ${{ steps.pl.outputs.paths }}
-    runs-on: ubuntu-latest
     steps:
       - name: Set up Python 3.7
         uses: actions/setup-python@v1
@@ -28,8 +27,9 @@ jobs:
         with:
           path: "changes/"
           type: ".txt"
-   example_matrix:
+  example_matrix:
     needs: list
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         version: ${{needs.list.outputs.output1}}
