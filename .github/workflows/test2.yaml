@@ -36,4 +36,10 @@ jobs:
         - name: echo
           run: |
              echo ${{ matrix.version }} ${{ matrix.os }}
+  final-job:
+     needs: ["list","example_matrix"]  
+     steps:
+        - name: echo
+          run: |
+             echo final
         
