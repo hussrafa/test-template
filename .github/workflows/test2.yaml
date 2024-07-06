@@ -31,8 +31,9 @@ jobs:
     strategy:
       matrix:
         version: ["changes/file1.txt","changes/files.txt"]
+        os: [ubuntu-22.04, ubuntu-20.04]
     steps:
         - name: echo
           run: |
-             echo ${{ matrix.version }}
+             echo ${{ matrix.version }} {{ matrix.os}}
         
