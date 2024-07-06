@@ -38,6 +38,7 @@ jobs:
              echo ${{ matrix.version }} ${{ matrix.os }}
   final-job:
      needs: ["list","example_matrix"]  
+     runs-on: ubuntu-latest
      steps:
         - name: echo
           run: |
