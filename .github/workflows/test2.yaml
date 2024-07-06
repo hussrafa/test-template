@@ -7,14 +7,34 @@ on:
   pull_request:
   workflow_dispatch:
 
-jobs:
 
-  basic-ubuntu-20:
-    runs-on: ubuntu-20.04
+jobs:
+  list:
+    name: Path lister
+    outputs:
+      output1: ${{ steps.pl.outputs.paths }}
+    runs-on: ubuntu-latest
     steps:
-      - name: test-1
-        uses: actions/checkout@v4
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: test
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.7"
+
+      - uses: actions/checkout@v3
+
+      - name: Fetch action
+        id: pl
+        uses: Rishabh510/Path-lister-action@master
+        with:
+          path: "changes/"
+          type: ".txt"
+   example_matrix:
+    needs: list
+    strategy:
+      matrix:
+        version: ${{needs.list.outputs.output1}}
+    steps:
+        - name: echo
+          run: |
+             echo ${{ matrix.version }}
         
